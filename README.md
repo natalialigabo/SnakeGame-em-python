@@ -3,13 +3,6 @@
 Um clássico **jogo da cobrinha (Snake Game)** desenvolvido em **Python** utilizando a biblioteca **Pygame**.  
 O objetivo é simples: **coma a comida, cresça e evite colidir consigo mesmo ou com as bordas da tela!**
 
----
-
-## 🎮 Demonstração
-
-*(Adicione aqui um gif ou print do jogo rodando)*  
-Exemplo:
-![Snake Game Demo](assets/demo.gif)
 
 ---
 
