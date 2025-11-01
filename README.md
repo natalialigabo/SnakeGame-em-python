@@ -22,5 +22,26 @@ Antes de começar, você precisa ter instalado em sua máquina:
 - [Python 3.8+](https://www.python.org/downloads/)
 - [Pygame](https://www.pygame.org/news)
 
+---
 
+### 🚀 Como Rodar
 
+Para rodar o jogo, execute o seguinte comando no seu terminal:
+
+```bash
+python3 SnakeGame.py
+```
+
+**Observação:** Se você encontrar um erro `libGL error`, significa que você está em um ambiente que não tem acesso direto a um display. Para resolver isso, você pode usar um framebuffer virtual como o `Xvfb`.
+
+1.  **Instale o Xvfb:**
+
+    ```bash
+    sudo apt-get update && sudo apt-get install -y xvfb
+    ```
+
+2.  **Rode o jogo com o Xvfb:**
+
+    ```bash
+    xvfb-run python3 SnakeGame.py
+    ```
