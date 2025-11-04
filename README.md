@@ -24,3 +24,7 @@ Antes de começar, você precisa ter instalado em sua máquina:
 
 
 
+Ps: os comentarios estão em inglês, estava tentando juntar a aprendizagem de duas coisas 
+
+
+
