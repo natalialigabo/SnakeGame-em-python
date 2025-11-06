@@ -3,16 +3,16 @@ import random
 import os 
 import time
 
-# Define the SnakeGame class to encapsulate the game logic
+# Define a classe SnakeGame para encapsular o jogo 
 class SnakeGame:
     
-    # Initialize the game
+    # INICIA O JOGO
     def __init__(self):
         pygame.init()
 
         pygame.display.set_caption("Jogo da Cobrinha em Python")
 
-        # Set screen dimensions
+        # DIMENÇÕES DA TELA
         self.largura, self.altura = 1000, 800
         self.tela = pygame.display.set_mode((self.largura, self.altura))
         self.relogio = pygame.time.Clock()
@@ -31,7 +31,7 @@ class SnakeGame:
         # Game parameters
         self.tamanho_quadrado = 10
         
-        # --- Estrutura de Fases com OBSTÁCULOS ---
+        # Estruturas para fases com obstaculos 
         self.fases = [
             # Fase 1: Sem Obstáculos
             {'pontos_necessarios': 0, 'velocidade': 15, 'cor_fundo': (0, 0, 0), 'cor_cobrinha': (0, 255, 0), 'cor_comida': (255, 255, 0), 'obstaculos': []},       
@@ -53,7 +53,7 @@ class SnakeGame:
         self.fase_atual_indice = 0 
         self.velocidade_jogo = self.fases[self.fase_atual_indice]['velocidade']
 
-        # --- Variáveis do Power-up ---
+        # PODERES 
         self.power_up_ativo = False
         self.tipo_power_up = None 
         self.power_up_tempo_fim = 0 
@@ -63,13 +63,13 @@ class SnakeGame:
         self.chance_spawn_power_up = 3 # Chance de 1 em 3 de spawnar um power-up
 
 
-        # Fonts for text display
+        # Fontes para o display 
         self.fonte_pontuacao = pygame.font.SysFont("arial", 25)
         self.fonte_gameover = pygame.font.SysFont("arial", 50)
         self.fonte_instrucoes = pygame.font.SysFont("arial", 25)
         self.fonte_fase = pygame.font.SysFont("arial", 25)
 
-        # Initialize game state variables
+        # inicia as variaveis de estado do jogo
         self.x = self.largura // 2
         self.y = self.altura // 2
         self.velocidade_x = self.tamanho_quadrado
@@ -89,7 +89,7 @@ class SnakeGame:
         self.comida_x, self.comida_y = self.gerar_comida()
 
 
-    # --- Funções Auxiliares para Geração de Obstáculos ---
+    # Função para auxiliar a criação de obstaculos
 
     def gerar_obstaculo_vertical(self, x, y_inicio, altura):
         obstaculos = []
@@ -130,7 +130,7 @@ class SnakeGame:
         return obstaculos
 
 
-    # --- Funções de I/O do Recorde ---
+    # Funções de I/O do Recorde 
 
     def _carregar_recorde(self):
         try:
@@ -144,9 +144,9 @@ class SnakeGame:
             arquivo.write(str(self.recorde))
 
 
-    # --- Funções de Desenho e Lógica ---
+    # Funções de Desenho e Lógica 
 
-    # Generate random position for food 
+    # Gera posições random para a comida
     def gerar_comida(self):
         obstaculos_atuais = self.fases[self.fase_atual_indice]['obstaculos']
         
@@ -161,12 +161,12 @@ class SnakeGame:
                (self.power_up_x, self.power_up_y) != (comida_x, comida_y):
                 return comida_x, comida_y
 
-    # Draw the food on the screen
+    # Desenha a comida na tela 
     def desenhar_comida(self, tamanho, comida_x, comida_y):
         cor_comida = self.fases[self.fase_atual_indice]['cor_comida']
         pygame.draw.rect(self.tela, cor_comida, [comida_x, comida_y, tamanho, tamanho])
 
-    # Draw the snake on the screen
+    # Desenha a cobrinha
     def desenhar_cobrinha(self, tamanho, pixel):
         cor_cobrinha = self.fases[self.fase_atual_indice]['cor_cobrinha']
         for pix in pixel:
@@ -238,7 +238,7 @@ class SnakeGame:
                 self.velocidade_jogo = self.fases[self.fase_atual_indice]['velocidade']
                 self.power_up_ativo = False
 
-    # Draw the score, high score, and phase on the screen
+    # desenha o score, high-score e a fase 
     def desenhar_info_jogo(self):
         # 1. Pontuação
         texto_pontuacao = self.fonte_pontuacao.render(f"Pontuação: {self.pontuacao}", True, self.azul)
@@ -259,12 +259,12 @@ class SnakeGame:
             texto_timer = self.fonte_fase.render(f"SLOW: {tempo_restante:.1f}s", True, cor)
             self.tela.blit(texto_timer, [self.largura - texto_timer.get_width() - 5, 30])
             
-    # Display a message on the screen
+    # mostra a mensagem na tela 
     def exibir_mensagem(self, msg, cor):
         texto = self.fonte_gameover.render(msg, True, cor)
         self.tela.blit(texto, [self.largura / 6, self.altura / 3])
 
-    # Display game over message with restart/quit instructions
+    # mostra a mensgem de restart ou sair do jogo
     def exibir_game_over(self):
         mensagem_game_over = self.fonte_gameover.render("Game Over!", True, self.vermelha)
         mensagem_instrucoes = self.fonte_instrucoes.render("Pressione C para jogar novamente ou Q para sair", True, self.vermelha)
@@ -304,7 +304,7 @@ class SnakeGame:
                     elif evento.key == pygame.K_p:
                         self.pausado = not self.pausado
         return False
-    # --- FIM DO MÉTODO handle_events RESTAURADO ---
+    # FIM DO MÉTODO handle_events RESTAURADO 
 
 
     # Update game state (snake position, collisions, food eating)
@@ -312,7 +312,7 @@ class SnakeGame:
         if self.pausado or self.perdeu:
             return
 
-        # Update snake position
+        # atualiza a posição da cobrinha
         self.x += self.velocidade_x
         self.y += self.velocidade_y
 
@@ -323,7 +323,7 @@ class SnakeGame:
             self.perdeu = True
             return
 
-        # Update snake body pixels
+        # atualiza os pixel do corpo da cobrinha
         self.pixel.append(cabeca_cobrinha)
         if len(self.pixel) > self.tamanho_cobrinha:
             del self.pixel[0]
@@ -371,7 +371,7 @@ class SnakeGame:
                 
                 self.comida_x, self.comida_y = self.gerar_comida() 
                 
-    # Draw all game elements on the screen
+    # Ddesenha todos os elementos do jogo na tela 
     def draw_game_elements(self):
         cor_fundo = self.fases[self.fase_atual_indice]['cor_fundo']
         self.tela.fill(cor_fundo)
@@ -410,7 +410,7 @@ class SnakeGame:
             self.draw_game_elements()
             self.relogio.tick(self.velocidade_jogo)
 
-# Create a game instance and run the game
+# Cria a instancia que runs o jogo
 while True:
     game = SnakeGame()
     game.rodar_jogo()
